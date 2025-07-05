@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Optimizer Chat - ATS CV Optimizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/chat.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-file-alt me-2"></i>
+                ATS CV Optimizer
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-home me-1"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- Chat Area -->
+            <div class="col-lg-8 d-flex flex-column chat-container">
+                <div class="chat-header bg-light p-3 border-bottom">
+                    <h5 class="mb-0">
+                        <i class="fas fa-robot text-primary me-2"></i>
+                        CV Optimization Assistant
+                    </h5>
+                    <small class="text-muted">Upload your CV and get personalized optimization suggestions</small>
+                </div>
+
+                <div class="chat-messages flex-grow-1 p-3" id="chatMessages">
+                    <!-- Messages will be loaded here -->
+                </div>
+
+                <div class="chat-input-area p-3 border-top">
+                    <!-- File Upload Area -->
+                    <div class="file-upload-area mb-3" id="fileUploadArea">
+                        <div class="upload-zone border-2 border-dashed border-primary rounded p-4 text-center">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                            <h6>Upload Your CV</h6>
+                            <p class="text-muted mb-3">Drag and drop your CV file here or click to browse</p>
+                            <input type="file" id="fileInput" class="d-none" accept=".pdf,.doc,.docx">
+                            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-upload me-2"></i>
+                                Choose File
+                            </button>
+                            <div class="mt-2">
+                                <small class="text-muted">Supported formats: PDF, DOC, DOCX (Max 10MB)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress mb-3 d-none" id="uploadProgress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
+                        <button class="btn btn-primary" type="button" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 bg-light border-start sidebar">
+                <div class="p-3">
+                    <h6 class="mb-3">
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        Optimization Tips
+                    </h6>
+                    <div class="tips-list">
+                        <div class="tip-item mb-3">
+                            <h6 class="text-primary">Use Standard Headings</h6>
+                            <p class="small text-muted">Use conventional section headers like "Work Experience", "Education", "Skills"</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6 class="text-primary">Include Keywords</h6>
+                            <p class="small text-muted">Use industry-specific keywords from job descriptions</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6 class="text-primary">Quantify Achievements</h6>
+                            <p class="small text-muted">Use numbers and percentages to highlight your accomplishments</p>
+                        </div>
+                        <div class="tip-item mb-3">
+                            <h6 class="text-primary">Simple Formatting</h6>
+                            <p class="small text-muted">Avoid complex layouts, graphics, and unusual fonts</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">
+                        <i class="fas fa-file-alt text-primary me-2"></i>
+                        Your CVs
+                    </h6>
+                    <div id="cvList">
+                        <!-- CV list will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden session ID -->
+    <input type="hidden" id="sessionId" th:value="${sessionId}">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+</html>
